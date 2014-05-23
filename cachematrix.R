@@ -5,21 +5,19 @@
 
 
 makeCacheMatrix <- function(x = matrix()) {
-  #if an object is called without a method 
+  # if an object is called without a method
   m <- NULL
   set <- function(y) {
     x <<- y
     m <<- NULL
-  }  
+  }
   get <- function() x
   setsolve <- function(solve) m <<- solve
   getsolve <- function() m
   list(set = set, get = get,
-  set = setsolve,
-  get = getsolve)
-  
+       setsolve = setsolve,
+       getsolve = getsolve)
 }
-
 
 ##  This function computes the inverse of the special "matrix" returned 
 #by makeCacheMatrix above. 
@@ -27,20 +25,15 @@ makeCacheMatrix <- function(x = matrix()) {
 #(and the matrix has not changed),
 #then the cachesolve should retrieve the inverse from the cache.
 
-cacheSolve <- function(x,..) {
-  
-        ## Return a matrix that is the inverse of 'x'
+cachesolve <- function(x, ...) {
   m <- x$getsolve()
   if(!is.null(m)) {
     message("getting cached data")
     return(m)
   }
   data <- x$get()
-  #check for non singular matrix only then calculate mean 
-  
-  m <- solve(data,..)
+  m <- solve(data, ...)
   x$setsolve(m)
   m
-  
 }
 
